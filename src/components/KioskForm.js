@@ -1,13 +1,16 @@
 // src/components/KioskForm.js
 import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+
 
 const KioskForm = () => {
     const [name, setName] = useState('');
     const [company, setCompany] = useState('');
     const [mobile, setMobile] = useState('');
     const [people, setPeople] = useState([]); // State for names
-    const [selectedPerson, setSelectedPerson] = useState(''); // State for selected person
+    const [selectedPersonName, setSelectedPersonName] = useState(''); // State for selected person
+    const [selectedPersonEmail, setSelectedPersonEmail] = useState(''); // State for selected person
     const [successMessage, setSuccessMessage] = useState(''); // State for success message
     const [sendingMessage, setSendingMessage] = useState(false); // State for success message
     
@@ -19,6 +22,11 @@ const KioskForm = () => {
             .catch((error) => console.error('Error fetching names:', error));
     }, []);
 
+    function setEmployee(e){
+        let obj = people.find(o => o.email === e);
+        setSelectedPersonName(obj.name);
+        setSelectedPersonEmail(obj.email);
+    } 
 
     const handleSubmit = (e) => {
         setSendingMessage(true);
@@ -28,23 +36,26 @@ const KioskForm = () => {
             visitor_name: name,
             visitor_company: company,
             visitor_mobile: mobile,
-            to_email: process.env.REACT_APP_EMAILJS_TOEMAIL,
-            employee: selectedPerson
+            to_email: selectedPersonEmail ? selectedPersonEmail : process.env.REACT_APP_EMAILJS_TOEMAIL,
+            employee: selectedPersonName
         };
 
         const options = {
             publicKey: process.env.REACT_APP_EMAILJS_PUBLICKEY
         };
 
+        console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName);
         emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams, options)
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
-                setSuccessMessage(`Thanks, ${selectedPerson} has been notified.`); // Set success message
+                setSuccessMessage(`Thanks, ${selectedPersonName} has been notified.`); // Set success message
+                console.log()
                 // Clear the form fields
                 setName('');
                 setCompany('');
                 setMobile('');
-                setSelectedPerson('');
+                setSelectedPersonName('');
+                setSelectedPersonEmail('');
                 
                 setTimeout(() => {
                     setSendingMessage(false);
@@ -57,11 +68,40 @@ const KioskForm = () => {
             }); 
     };
 
+    const handlePrintLabel = () => {
+        const labelContent = `
+            Visitor Name: ${name}
+            Visiting: ${selectedPersonName}
+        `;
+        
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Print Label</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; }
+                        pre { font-size: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <pre>${labelContent}</pre>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    };
+
     return (
+        <>
         <form onSubmit={handleSubmit} className="bg-white bg-opacity-70 backdrop-blur-lg p-8 rounded-lg w-3/4 md:w-1/2 lg:w-1/3">
             {successMessage && (
                 <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-lg transition mb-5">
                     {successMessage}
+                    <button onClick={handlePrintLabel} className="ml-4 text-blue-500 underline">
+                        Print Label
+                    </button>
                 </div>
             )}
             
@@ -72,14 +112,14 @@ const KioskForm = () => {
             <div className="mb-4">
                 <select
                     id="person"
-                    value={selectedPerson}
-                    onChange={(e) => setSelectedPerson(e.target.value)}
+                    value={selectedPersonName}
+                    onChange={(e) => setEmployee(e.target.value)}
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                     required
                 >
                     <option value="" disabled>Select the person you are visiting</option>
                     {people.map((person, index) => (
-                        <option key={index} value={person}>{person}</option>
+                        <option key={index} value={person.email}>{person.name}</option>
                     ))}
                 </select>
             </div>
@@ -96,10 +136,9 @@ const KioskForm = () => {
             <div className="mb-4">
                 <input
                     type="text"
-                    placeholder="Company you are from"
+                    placeholder="Company you are visiting from or N/A"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
-                    required
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                 />
             </div>
@@ -144,10 +183,20 @@ const KioskForm = () => {
                     <p className="mb-2">Enter your name, company, and mobile number.</p>
                     <p className="mb-2">Click "Sign In" to submit your information.</p>
             </div>
+            <div>
+                <SignedOut>
+                    <SignInButton mode='modal'>
+                        <a href="#" className="underline text-black-300 hover:text-black-900 visited:text-black-300">Admin Login</a>
+                    </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+            </div>
             </>
             )}
         </form>
-
+        </>
     );
 };
 

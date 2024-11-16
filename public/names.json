@@ -1,12 +1,52 @@
 [
-    "Alice Johnson",
-    "Bob Smith",
-    "Charlie Brown",
-    "Diana Prince",
-    "Ethan Hunt",
-    "Fiona Gallagher",
-    "George Costanza",
-    "Hannah Baker",
-    "Isaac Newton",
-    "Jack Sparrow"
+    {
+        "name": "Alice Johnson",
+        "email": "damian@pulsedigital.co.nz",
+        "mobile": "+1-555-0101"
+    },
+    {
+        "name": "Bob Smith",
+        "email": "bob.smith@example.com",
+        "mobile": "+1-555-0102"
+    },
+    {
+        "name": "Charlie Brown",
+        "email": "charlie.brown@example.com",
+        "mobile": "+1-555-0103"
+    },
+    {
+        "name": "Diana Prince",
+        "email": "diana.prince@example.com",
+        "mobile": "+1-555-0104"
+    },
+    {
+        "name": "Ethan Hunt",
+        "email": "ethan.hunt@example.com",
+        "mobile": "+1-555-0105"
+    },
+    {
+        "name": "Fiona Gallagher",
+        "email": "fiona.gallagher@example.com",
+        "mobile": "+1-555-0106"
+    },
+    {
+        "name": "George Costanza",
+        "email": "george.costanza@example.com",
+        "mobile": "+1-555-0107"
+    },
+    {
+        "name": "Hannah Baker",
+        "email": "hannah.baker@example.com",
+        "mobile": "+1-555-0108"
+    },
+    {
+        "name": "Isaac Newton",
+        "email": "isaac.newton@example.com",
+        "mobile": "+1-555-0109"
+    },
+    {
+        "name": "Jack Sparrow",
+        "email": "jack.sparrow@example.com",
+        "mobile": "+1-555-0110"
+    }
 ]
