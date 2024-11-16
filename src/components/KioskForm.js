@@ -178,12 +178,10 @@ const KioskForm = () => {
             )}
             <div className="mt-6">
                     <h2 className="text-xl font-bold mb-2">Guidance</h2>
-                    <p className="mb-2">Please fill out the form to register your visit.</p>
-                    <p className="mb-2">Select the person you are visiting from the dropdown.</p>
-                    <p className="mb-2">Enter your name, company, and mobile number.</p>
-                    <p className="mb-2">Click "Sign In" to submit your information.</p>
+                    <p className="mb-2">Please fill out the form to register your visit. Select the person you are visiting from the dropdown.</p>
+                    <p className="mb-2">Enter your name, company, and mobile number. Click "Sign In" to submit your information.</p>
             </div>
-            <div>
+            <div className="mt-10">
                 <SignedOut>
                     <SignInButton mode='modal'>
                         <a href="#" className="underline text-black-300 hover:text-black-900 visited:text-black-300">Admin Login</a>
