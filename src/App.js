@@ -1,24 +1,20 @@
-import KioskForm from './components/KioskForm';
-
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
+import AppPage from './components/AppPage';
+import BookPage from './components/BookPage';
 
 const App = () => {
-  return (
-    <div className="relative w-full h-screen overflow-hidden">
-      <video
-        className=" object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-      <source src="/videos/bg6.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="relative z-10 flex justify-center items-center h-full">
-        <KioskForm />
-      </div>
-    </div>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/app" element={<AppPage />} />
+                <Route path="/book" element={<BookPage />} />
+                {/* Add other routes as needed */}
+            </Routes>
+        </Router>
+    );
 };
 
 export default App;
