@@ -1,4 +1,4 @@
-ename: Azure Static Web Apps CI/CD
+name: Azure Static Web Apps CI/CD
 
 env:
   CI: false
