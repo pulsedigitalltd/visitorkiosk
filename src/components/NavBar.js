@@ -7,7 +7,7 @@ const NavBar = () => {
     return (
         <div className="relative flex items-center p-4 bg-white" style={{ backgroundColor: 'rgb(240, 235, 230)' }}>
             <button 
-                onClick={() => navigate('/')} 
+                onClick={() => navigate(-1)} 
                 className="bg-white border border-gray-300 rounded px-6 py-4 text-2xl mr-4 flex items-center"
             >
                 <span className="mr-2">&larr;</span>

@@ -11,6 +11,7 @@ const KioskForm = () => {
     const [people, setPeople] = useState([]); // State for names
     const [selectedPersonName, setSelectedPersonName] = useState(''); // State for selected person
     const [selectedPersonEmail, setSelectedPersonEmail] = useState(''); // State for selected person
+    const [selectedPersonMobile, setSelectedPersonMobile] = useState(''); // State for selected person
     const [successMessage, setSuccessMessage] = useState(''); // State for success message
     const [sendingMessage, setSendingMessage] = useState(false); // State for success message
     
@@ -26,6 +27,7 @@ const KioskForm = () => {
         let obj = people.find(o => o.email === e);
         setSelectedPersonName(obj.name);
         setSelectedPersonEmail(obj.email);
+        setSelectedPersonMobile(obj.mobile);
     } 
 
     const handleSubmit = (e) => {
@@ -34,8 +36,8 @@ const KioskForm = () => {
         
         const templateParams = {
             visitor_name: name,
-            visitor_company: company,
-            visitor_mobile: mobile,
+            //visitor_company: company,
+            //visitor_mobile: mobile,
             to_email: selectedPersonEmail ? selectedPersonEmail : process.env.REACT_APP_EMAILJS_TOEMAIL,
             employee: selectedPersonName
         };
@@ -48,7 +50,7 @@ const KioskForm = () => {
         emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams, options)
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
-                setSuccessMessage(`Thanks, ${selectedPersonName} has been notified.`); // Set success message
+                setSuccessMessage(`Thanks, ${selectedPersonName} has been notified. They will be with your shortly.`); // Set success message
                 // Clear the form fields
                 setName('');
                 setCompany('');
@@ -98,15 +100,15 @@ const KioskForm = () => {
             {successMessage && (
                 <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-lg transition mb-5">
                     {successMessage}
-                    <button onClick={handlePrintLabel} className="ml-4 text-blue-500 underline">
+{/*                     <button onClick={handlePrintLabel} className="ml-4 text-blue-500 underline">
                         Print Label
-                    </button>
+                    </button> */}
                 </div>
             )}
             
             {!successMessage && (
             <>
-            <h2 className="text-2xl font-bold mb-4">Visitor Registration</h2>
+            <h2 className="text-2xl font-bold mb-4">Let us know you are here</h2>
             
             <div className="mb-4">
                 <select
@@ -118,7 +120,7 @@ const KioskForm = () => {
                 >
                     <option value="" disabled>Select the person you are visiting</option>
                     {people.map((person, index) => (
-                        <option key={index} value={person.email}>{person.name}</option>
+                        <option key={index} value={person.email}>{person.name} - {person.businessType}</option>
                     ))}
                 </select>
             </div>
@@ -132,16 +134,7 @@ const KioskForm = () => {
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                 />
             </div>
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Company you are visiting from or N/A"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
-                />
-            </div>
-            <div className="mb-4">
+{/*             <div className="mb-4">
                 <input
                     type="tel"
                     placeholder="Your mobile number"
@@ -150,7 +143,7 @@ const KioskForm = () => {
                     required
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                 />
-            </div>
+            </div> */}
             {!sendingMessage && (
             <>
                 <button type="submit" className="w-full bg-blue-500 text-2xl text-white p-6 rounded hover:bg-blue-600 drop-shadow shadow-md flex justify-center"
@@ -177,9 +170,9 @@ const KioskForm = () => {
             <div className="mt-6">
                     <h2 className="text-xl font-bold mb-2">Guidance</h2>
                     <p className="mb-2">Please fill out the form to register your visit. Select the person you are visiting from the dropdown.</p>
-                    <p className="mb-2">Enter your name, company, and mobile number. Click "Sign In" to submit your information.</p>
+                    
             </div>
-            <div className="mt-10">
+            {/* <div className="mt-10">
                 <SignedOut>
                     <SignInButton mode='modal'>
                         <a href="#" className="underline text-black-300 hover:text-black-900 visited:text-black-300">Admin Login</a>
@@ -188,7 +181,7 @@ const KioskForm = () => {
                 <SignedIn>
                     <UserButton />
                 </SignedIn>
-            </div>
+            </div> */}
             </>
             )}
         </form>
