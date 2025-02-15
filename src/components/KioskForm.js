@@ -69,7 +69,7 @@ const KioskForm = () => {
             }); 
     };
 
-    const handlePrintLabel = () => {
+/*     const handlePrintLabel = () => {
         const labelContent = `
             Visitor Name: ${name}
             Visiting: ${selectedPersonName}
@@ -92,7 +92,7 @@ const KioskForm = () => {
         `);
         printWindow.document.close();
         printWindow.print();
-    };
+    }; */
 
     return (
         <>
