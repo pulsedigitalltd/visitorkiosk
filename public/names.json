@@ -2,64 +2,57 @@
     {
         "name": "Natasha",
         "email": "info@yndwellness.com.au",
-        "mobile": "0405833803",
+        "mobile": "61405833803",
         "businessType": "skin and spa massage",
         "room": "1 and 3"
     },
     {
         "name": "Jelisha",
         "email": "info@yndwellness.com.au",
-        "mobile": "0411600688",
+        "mobile": "61411600688",
         "businessType": "naturopath",
         "room": "7"    
     },
     {
         "name": "Oki",
         "email": "iamoki2003@gmail.com",
-        "mobile": "0451932459",
+        "mobile": "61451932459",
         "businessType": "japanese head spa",
         "room": "2"    
     },
     {
         "name": "Kellie",
         "email": "kelliadelebrandon@gmail.com",
-        "mobile": "0487611813",
+        "mobile": "61487611813",
         "businessType": "advanced skin rejuvenation & correction",
         "room": "4"  
     },
     {
         "name": "Karam",
         "email": "beautyroyalestudio@gmail.com",
-        "mobile": "0416236271",
+        "mobile": "61416236271",
         "businessType": "brows and lashes",
         "room": "5"  
     },
     {
         "name": "Linda",
         "email": "kimpinnuck@gmail.com",
-        "mobile": "0458588131",
+        "mobile": "61458588131",
         "businessType": "cosmetic injectors",
         "room": "6"  
     },
     {
         "name": "Kim",
         "email": "kimpinnuck@gmail.com",
-        "mobile": "0490887583",
+        "mobile": "61490887583",
         "businessType": "cosmetic injectors",
         "room": "6"  
     },
     {
         "name": "Alysha",
         "email": "kimpinnuck@gmail.com",
-        "mobile": "0432846535",
+        "mobile": "61432846535",
         "businessType": "cosmetic injectors",
         "room": "6"  
-    },
-    {
-        "name": "Damian",
-        "email": "damian@pulsedigital.co.nz",
-        "mobile": "0212700957",
-        "businessType": "test account",
-        "room": "0"  
     }
 ]

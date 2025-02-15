@@ -38,14 +38,15 @@ const KioskForm = () => {
             visitor_name: name,
             //visitor_company: company,
             //visitor_mobile: mobile,
-            to_email: selectedPersonEmail ? selectedPersonEmail : process.env.REACT_APP_EMAILJS_TOEMAIL,
+            //to_email: process.env.REACT_APP_TEST_SMS,
+            to_email: selectedPersonMobile + '@sms.clicksend.com',
             employee: selectedPersonName
         };
 
         const options = {
             publicKey: process.env.REACT_APP_EMAILJS_PUBLICKEY
         };
-
+        console.log('click address: ', templateParams.to_email);
         console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'publicKey: ', process.env.REACT_APP_EMAILJS_PUBLICKEY);
         emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams, options)
             .then((response) => {
