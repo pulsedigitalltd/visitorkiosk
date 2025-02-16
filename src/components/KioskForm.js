@@ -1,13 +1,11 @@
 // src/components/KioskForm.js
 import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+//import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 
 const KioskForm = () => {
     const [name, setName] = useState('');
-    const [company, setCompany] = useState('');
-    const [mobile, setMobile] = useState('');
     const [people, setPeople] = useState([]); // State for names
     const [selectedPersonName, setSelectedPersonName] = useState(''); // State for selected person
     const [selectedPersonEmail, setSelectedPersonEmail] = useState(''); // State for selected person
@@ -24,7 +22,8 @@ const KioskForm = () => {
     }, []);
 
     function setEmployee(e){
-        let obj = people.find(o => o.email === e);
+        let obj = people.find(o => o.id === e);
+        console.log('e ', e)
         setSelectedPersonName(obj.name);
         setSelectedPersonEmail(obj.email);
         setSelectedPersonMobile(obj.mobile);
@@ -43,19 +42,20 @@ const KioskForm = () => {
             employee: selectedPersonName
         };
 
+        console.log(templateParams);
+
         const options = {
             publicKey: process.env.REACT_APP_EMAILJS_PUBLICKEY
         };
         console.log('click address: ', templateParams.to_email);
         console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'publicKey: ', process.env.REACT_APP_EMAILJS_PUBLICKEY);
+        
         emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams, options)
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
                 setSuccessMessage(`Thanks, ${selectedPersonName} has been notified. They will be with your shortly.`); // Set success message
                 // Clear the form fields
                 setName('');
-                setCompany('');
-                setMobile('');
                 setSelectedPersonName('');
                 setSelectedPersonEmail('');
                 
@@ -67,33 +67,8 @@ const KioskForm = () => {
             .catch((err) => {
                 console.error('Failed to send email. Error: ', err);
                 setSuccessMessage('There was an error sending your registration. Please try again.'); // Set error message
-            }); 
+            });
     };
-
-/*     const handlePrintLabel = () => {
-        const labelContent = `
-            Visitor Name: ${name}
-            Visiting: ${selectedPersonName}
-        `;
-        
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`
-            <html>
-                <head>
-                    <title>Print Label</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; }
-                        pre { font-size: 20px; }
-                    </style>
-                </head>
-                <body>
-                    <pre>${labelContent}</pre>
-                </body>
-            </html>
-        `);
-        printWindow.document.close();
-        printWindow.print();
-    }; */
 
     return (
         <>
@@ -101,9 +76,6 @@ const KioskForm = () => {
             {successMessage && (
                 <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-lg transition mb-5">
                     {successMessage}
-{/*                     <button onClick={handlePrintLabel} className="ml-4 text-blue-500 underline">
-                        Print Label
-                    </button> */}
                 </div>
             )}
             
@@ -114,14 +86,13 @@ const KioskForm = () => {
             <div className="mb-4">
                 <select
                     id="person"
-                    value={selectedPersonName}
-                    onChange={(e) => setEmployee(e.target.value)}
+                    onChange={(e) => setEmployee(e.target.selectedIndex)}
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                     required
                 >
                     <option value="" disabled>Select the person you are visiting</option>
                     {people.map((person, index) => (
-                        <option key={index} value={person.email}>{person.name} - {person.businessType}</option>
+                        <option key={index} value={person.id}>{person.name} - {person.businessType}</option>
                     ))}
                 </select>
             </div>
