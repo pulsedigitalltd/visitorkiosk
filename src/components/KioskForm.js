@@ -21,9 +21,29 @@ const KioskForm = () => {
             .catch((error) => console.error('Error fetching names:', error));
     }, []);
 
+    useEffect(() => {
+        // Initialise the emailJS service
+        emailjs.init({
+            publicKey: process.env.REACT_APP_EMAILJS_PUBLICKEY,
+            // Do not allow headless browsers
+            blockHeadless: true,
+            blockList: {
+              // Block the suspended emails
+              list: [],
+              // The variable contains the email address
+              watchVariable: '',
+            },
+            limitRate: {
+              // Set the limit rate for the application
+              id: 'app',
+              // Allow 1 request per 10s
+              throttle: 10000,
+            },
+          });
+    }, []);
+
     function setEmployee(e){
         let obj = people.find(o => o.id === e);
-        console.log('e ', e)
         setSelectedPersonName(obj.name);
         setSelectedPersonEmail(obj.email);
         setSelectedPersonMobile(obj.mobile);
@@ -35,22 +55,15 @@ const KioskForm = () => {
         
         const templateParams = {
             visitor_name: name,
-            //visitor_company: company,
-            //visitor_mobile: mobile,
-            //to_email: process.env.REACT_APP_TEST_SMS,
             to_email: selectedPersonMobile + '@sms.clicksend.com',
-            employee: selectedPersonName
+            employee: selectedPersonName,
         };
 
-        console.log(templateParams);
-
-        const options = {
-            publicKey: process.env.REACT_APP_EMAILJS_PUBLICKEY
-        };
-        console.log('click address: ', templateParams.to_email);
-        console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'publicKey: ', process.env.REACT_APP_EMAILJS_PUBLICKEY);
+        //console.log(templateParams);
+        //console.log('click address: ', templateParams.to_email);
+        //console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'publicKey: ', process.env.REACT_APP_EMAILJS_PUBLICKEY);
         
-        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams, options)
+        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams)
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
                 setSuccessMessage(`Thanks, ${selectedPersonName} has been notified. They will be with your shortly.`); // Set success message
