@@ -73,7 +73,7 @@ const KioskForm = () => {
         console.log('click address: ', templateParams.to_email);
         console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'name: ', name); 
         
-         /* emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams)
+        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams)
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
 
@@ -92,7 +92,7 @@ const KioskForm = () => {
             .catch((err) => {
                 console.error('Failed to send email. Error: ', err);
                 setSuccessMessage('There was an error sending your registration. Please try again.'); // Set error message
-            });  */
+            }); 
     };
 
     return (
