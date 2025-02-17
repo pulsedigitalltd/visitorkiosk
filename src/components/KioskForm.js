@@ -7,6 +7,7 @@ import emailjs from '@emailjs/browser';
 const KioskForm = () => {
     const [name, setName] = useState('');
     const [people, setPeople] = useState([]); // State for names
+    const [selectedPersonIndex, setSelectedPersonIndex] = useState(0); // State for selected person
     const [selectedPersonName, setSelectedPersonName] = useState(''); // State for selected person
     const [selectedPersonEmail, setSelectedPersonEmail] = useState(''); // State for selected person
     const [selectedPersonMobile, setSelectedPersonMobile] = useState(''); // State for selected person
@@ -44,9 +45,17 @@ const KioskForm = () => {
 
     function setEmployee(e){
         let obj = people.find(o => o.id === e);
-        setSelectedPersonName(obj.name);
-        setSelectedPersonEmail(obj.email);
-        setSelectedPersonMobile(obj.mobile);
+        
+        if(e > 0) {
+            setSelectedPersonIndex(e);
+            setSelectedPersonName(obj.name);
+            setSelectedPersonEmail(obj.email);
+            setSelectedPersonMobile(obj.mobile);
+        }else {
+            setSelectedPersonIndex(0);
+        }
+
+        console.log(e)
     } 
 
     const handleSubmit = (e) => {
@@ -55,17 +64,20 @@ const KioskForm = () => {
         
         const templateParams = {
             visitor_name: name,
-            to_email: selectedPersonMobile + '@sms.clicksend.com',
+            to_email: "ynd.3b3dnp@zapiermail.com",
             employee: selectedPersonName,
+            mobileNumber: selectedPersonMobile
         };
 
-        //console.log(templateParams);
-        //console.log('click address: ', templateParams.to_email);
-        //console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'publicKey: ', process.env.REACT_APP_EMAILJS_PUBLICKEY);
+        console.log(templateParams);
+        console.log('click address: ', templateParams.to_email);
+        console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'name: ', name); 
         
-        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams)
+         /* emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams)
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
+
+                
                 setSuccessMessage(`Thanks, ${selectedPersonName} has been notified. They will be with your shortly.`); // Set success message
                 // Clear the form fields
                 setName('');
@@ -80,7 +92,7 @@ const KioskForm = () => {
             .catch((err) => {
                 console.error('Failed to send email. Error: ', err);
                 setSuccessMessage('There was an error sending your registration. Please try again.'); // Set error message
-            });
+            });  */
     };
 
     return (
@@ -103,7 +115,7 @@ const KioskForm = () => {
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                     required
                 >
-                    <option value="" disabled>Select the person you are visiting</option>
+                    <option value="0" >Select the person you are visiting</option>
                     {people.map((person, index) => (
                         <option key={index} value={person.id}>{person.name} - {person.businessType}</option>
                     ))}
@@ -129,7 +141,7 @@ const KioskForm = () => {
                     className="w-full p-5 border border-gray-300 rounded-lg drop-shadow shadow-md"
                 />
             </div> */}
-            {!sendingMessage && (
+            {!sendingMessage && selectedPersonIndex > 0 && (
             <>
                 <button type="submit" className="w-full bg-blue-500 text-2xl text-white p-6 rounded hover:bg-blue-600 drop-shadow shadow-md flex justify-center"
                 >
@@ -137,6 +149,7 @@ const KioskForm = () => {
                 </button>
             </>
             )}
+
             {sendingMessage && (
             <>
                 <button type="button" className="w-full cursor-not-allowed text-2xl bg-blue-500 text-white p-6 rounded hover:bg-blue-600 drop-shadow shadow-md flex justify-center" disabled="">
