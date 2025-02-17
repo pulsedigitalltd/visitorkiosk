@@ -22,27 +22,6 @@ const KioskForm = () => {
             .catch((error) => console.error('Error fetching names:', error));
     }, []);
 
-    useEffect(() => {
-        // Initialise the emailJS service
-        emailjs.init({
-            publicKey: process.env.REACT_APP_EMAILJS_PUBLICKEY,
-            // Do not allow headless browsers
-            blockHeadless: true,
-            blockList: {
-              // Block the suspended emails
-              list: [],
-              // The variable contains the email address
-              watchVariable: '',
-            },
-            limitRate: {
-              // Set the limit rate for the application
-              id: 'app',
-              // Allow 1 request per 10s
-              throttle: 10000,
-            },
-          });
-    }, []);
-
     function setEmployee(e){
         let obj = people.find(o => o.id === e);
         
@@ -73,7 +52,7 @@ const KioskForm = () => {
         console.log('click address: ', templateParams.to_email);
         console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'name: ', name); 
         
-        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams)
+        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams,{'publicKey': process.env.REACT_APP_EMAILJS_PUBLICKEY})
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
 
