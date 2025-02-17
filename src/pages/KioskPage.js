@@ -12,7 +12,7 @@ const AppPage = () => {
         muted
         playsInline
       >
-      <source src="/videos/bg10.mp4" type="video/mp4" />
+      <source src="/videos/bg10_70speed_crop.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className="relative z-10 flex justify-center items-center h-full">
