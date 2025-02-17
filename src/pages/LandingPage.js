@@ -21,7 +21,7 @@ const LandingPage = () => {
                 muted
                 playsInline
             >
-                <source src="/videos/bg4.mp4" type="video/mp4" />
+                <source src="/videos/bg10.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
             <div  className="bg-ynd bg-opacity-80 backdrop-blur-md border-gray-500 rounded-t-full shadow-lg p-8 z-10 mt-20 py-80">
