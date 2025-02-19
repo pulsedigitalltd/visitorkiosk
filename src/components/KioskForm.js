@@ -19,8 +19,7 @@ const KioskForm = () => {
         fetch('/names.json')
             .then((response) => response.json())
             .then((data) => setPeople(data))
-            .catch((error) => console.error('Error fetching names:', error));
-        console.log(process.env);    
+            .catch((error) => console.error('Error fetching names:', error));   
     }, []);
 
     function setEmployee(e){
@@ -34,8 +33,6 @@ const KioskForm = () => {
         }else {
             setSelectedPersonIndex(0);
         }
-
-        console.log(e)
     } 
 
     const handleSubmit = (e) => {
@@ -49,9 +46,9 @@ const KioskForm = () => {
             mobileNumber: selectedPersonMobile
         };
 
-        console.log(templateParams);
-        console.log('click address: ', templateParams.to_email);
-        console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'name: ', name); 
+        //console.log(templateParams);
+        //console.log('click address: ', templateParams.to_email);
+        //console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'name: ', name); 
         
         emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams,{
             publicKey: 'XaUe0CFD6TxBMrKnD'
