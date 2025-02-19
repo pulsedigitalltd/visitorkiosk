@@ -20,6 +20,7 @@ const KioskForm = () => {
             .then((response) => response.json())
             .then((data) => setPeople(data))
             .catch((error) => console.error('Error fetching names:', error));
+        console.log(process.env);    
     }, []);
 
     function setEmployee(e){
