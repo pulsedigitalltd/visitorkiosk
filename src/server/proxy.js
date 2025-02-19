@@ -48,6 +48,12 @@ function rewriteContent(html, baseUrl, selectorToRemove) {
   const bodyEl = document.body;
   bodyEl.insertAdjacentHTML('beforeend',clickHandler);
   
+/*   const head = document.head;
+  const policyDoc = '<meta http-equiv="Content-Security-Policy"  content="frame-src yndproxy.azurewebsites.net" />'
+  head.insertAdjacentHTML('beforeend', policyDoc);
+  const baseDomain = baseUrl.h
+  console.log(baseUrl) */
+
   // Remove specified element
   const elementToRemove = document.querySelector(selectorToRemove);
   if (elementToRemove) {
