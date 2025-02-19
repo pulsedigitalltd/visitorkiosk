@@ -52,8 +52,10 @@ const KioskForm = () => {
         console.log('click address: ', templateParams.to_email);
         console.log('sending email to: ', selectedPersonEmail, 'for: ' , selectedPersonName, 'name: ', name); 
         
-        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams,{'publicKey': process.env.REACT_APP_EMAILJS_PUBLICKEY})
-            .then((response) => {
+        emailjs.send(process.env.REACT_APP_EMAILJS_SERVICEID,process.env.REACT_APP_EMAILJS_TEMPLATEIDID, templateParams,{
+            publicKey: 'XaUe0CFD6TxBMrKnD'
+            }
+        ).then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
 
                 
